@@ -9,6 +9,13 @@ import org.vertx.java.core.VertxFactory;
 import org.vertx.java.core.http.HttpServer;
 import org.vertx.java.core.http.RouteMatcher;
 
+import com.github.steingrd.fermonitor.app.handlers.CreateBrew;
+import com.github.steingrd.fermonitor.app.handlers.ListBrews;
+import com.github.steingrd.fermonitor.app.handlers.UploadTemperature;
+import com.tempodb.client.Client;
+import com.tempodb.client.ClientBuilder;
+
+import static com.github.steingrd.fermonitor.app.EnvironmentUtils.propertyOrEnvVariable;
 import static com.github.steingrd.fermonitor.app.EnvironmentUtils.propertyOrEnvVariableWithDefault;
 
 public class StartFermonitorApp {
@@ -18,13 +25,23 @@ public class StartFermonitorApp {
 	public static void main(String...args) throws InterruptedException {
 		log.info("Starting FermonitorApp...");
 		
+		final Client tempodb = new ClientBuilder()
+			.host(tempodbHost())
+			.port(tempodbPort())
+			.key(tempodbKey())
+			.secret(tempodbSecret())
+			.secure(tempodbSecure())
+			.build();
+		
 		final Vertx vertx = VertxFactory.newVertx();
 		final HttpServer server = vertx.createHttpServer();
 		final RouteMatcher router = new RouteMatcher();
 		
-		router.get("/", request -> {
-			request.response().end("Hello, world!");
-		});
+		router
+			.get("/", request -> { request.response().end("Hello, world!"); })
+			.get("/brews", new ListBrews(tempodb))
+			.post("/brews/:brewId", new CreateBrew(tempodb))
+			.post("/brews/:brewId/temperatures", new UploadTemperature(tempodb));
 		
 		server.requestHandler(router).listen(port(), asyncResult -> {
 			if (asyncResult.succeeded()) {
@@ -38,6 +55,26 @@ public class StartFermonitorApp {
 		new CountDownLatch(1).await();
 	}
 	
+	private static boolean tempodbSecure() {
+		return Boolean.parseBoolean(propertyOrEnvVariable("TEMPODB_API_SECURE").toLowerCase());
+	}
+
+	private static String tempodbSecret() {
+		return propertyOrEnvVariable("TEMPODB_API_SECRET");
+	}
+
+	private static String tempodbKey() {
+		return propertyOrEnvVariable("TEMPODB_API_KEY");
+	}
+
+	private static int tempodbPort() {
+		return Integer.parseInt(propertyOrEnvVariable("TEMPODB_API_PORT"));
+	}
+
+	private static String tempodbHost() {
+		return propertyOrEnvVariable("TEMPODB_API_HOST");
+	}
+
 	static int port() {
 		return Integer.parseInt(propertyOrEnvVariableWithDefault("PORT", "9090"));
 	}
