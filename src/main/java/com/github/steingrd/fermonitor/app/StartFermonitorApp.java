@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.VertxFactory;
 import org.vertx.java.core.http.HttpServer;
+import org.vertx.java.core.http.RouteMatcher;
 
 import static com.github.steingrd.fermonitor.app.EnvironmentUtils.propertyOrEnvVariableWithDefault;
 
@@ -19,13 +20,13 @@ public class StartFermonitorApp {
 		
 		final Vertx vertx = VertxFactory.newVertx();
 		final HttpServer server = vertx.createHttpServer();
-
-		server.requestHandler(request -> {
-			log.info("Handling request {}", request.path());
-			request.response().end();
+		final RouteMatcher router = new RouteMatcher();
+		
+		router.get("/", request -> {
+			request.response().end("Hello, world!");
 		});
 		
-		server.listen(port(), asyncResult -> {
+		server.requestHandler(router).listen(port(), asyncResult -> {
 			if (asyncResult.succeeded()) {
 				log.info("HTTP server is listening.");
 			} else {
