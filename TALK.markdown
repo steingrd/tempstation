@@ -5,6 +5,7 @@
 # git push heroku master
 	- magic follows
 	- explain what heroku is, what it does, and so on
+	- heroku plugins:install git://github.com/ddollar/heroku-config.git
 
 # heroku logs -t
 
