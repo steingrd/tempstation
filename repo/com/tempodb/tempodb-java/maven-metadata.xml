@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.tempodb</groupId>
+  <artifactId>tempodb-java</artifactId>
+  <versioning>
+    <release>0.7.1.local</release>
+    <versions>
+      <version>0.7.1.local</version>
+    </versions>
+    <lastUpdated>20140415201005</lastUpdated>
+  </versioning>
+</metadata>
