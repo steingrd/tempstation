@@ -20,15 +20,18 @@ public class ProtectedHandler implements Handler<HttpServerRequest> {
 		String key = request.headers().get("X-Fermonitor-Key");
 		if (key == null) {
 			request.response().setStatusCode(400).end("Missing header X-Fermonitor-Key");
+			return;
 		}
 		
 		String secret = request.headers().get("X-Fermonitor-Secret");
 		if (secret == null) {
 			request.response().setStatusCode(400).end("Missing header X-Fermonitor-Secret");
+			return;
 		}
 		
 		if (!authService.isAuthorized(key, secret)) {
 			request.response().setStatusCode(403).end();
+			return;
 		}
 		
 		handler.handle(request);

@@ -29,3 +29,5 @@
 
 # debugging heroku run bash
 
+	- corrupt jar downloaded - wtf?
+
