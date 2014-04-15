@@ -12,8 +12,17 @@
 
 # heroku addons:open tempodb
 
+# heroku addons:add iron_cache
+
+# heroku addons:open iron_cache
+
 # heroku config
 
 	- explain environment variables
-	- needs to be configured in IDE...
+	- needs to be configured in IDE
 	- shortcuts in EnvironmentUtils
+
+# custom commands
+	
+	- heroku run src/main/scripts/createkey.sh
+

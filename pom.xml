@@ -7,18 +7,12 @@
 	<name>fermonitor-app</name>
 
 	<properties>
-		<slf4j.version>1.7.5</slf4j.version>
+		<slf4j.version>1.7.7</slf4j.version>
+		<httpcomponents.version>4.2.1</httpcomponents.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-
+	
 	<repositories>
-		<repository>
-			<id>Maven Central</id>
-			<url>http://repo1.maven.org/maven2/</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
 		<repository>
 			<id>TempoDB Repository</id>
 			<url>http://maven.tempo-db.com/artifactory/repo/</url>
@@ -64,6 +58,31 @@
 			<version>0.7.1</version>
 		</dependency>
 
+		<!-- ironcache client -->
+		<dependency>
+			<groupId>com.github.mrcritical</groupId>
+			<artifactId>ironcache</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
+		<!-- apache httpclient - tempodb and ironcache depend on 
+		different versions, let's go for latest and greatest -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>${httpcomponents.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>${httpcomponents.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient-cache</artifactId>
+			<version>${httpcomponents.version}</version>
+		</dependency>	
+
 		<!-- vertx -->
 		<dependency>
 			<groupId>io.vertx</groupId>
@@ -75,7 +94,7 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>15.0</version>
+			<version>17.0-rc2</version>
 		</dependency>
 		<dependency>
 			<groupId>joda-time</groupId>

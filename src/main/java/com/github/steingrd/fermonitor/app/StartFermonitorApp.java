@@ -9,9 +9,12 @@ import org.vertx.java.core.VertxFactory;
 import org.vertx.java.core.http.HttpServer;
 import org.vertx.java.core.http.RouteMatcher;
 
+import com.github.mrcritical.ironcache.DefaultIronCache;
+import com.github.mrcritical.ironcache.IronCache;
 import com.github.steingrd.fermonitor.app.handlers.CreateBrew;
 import com.github.steingrd.fermonitor.app.handlers.ListBrews;
 import com.github.steingrd.fermonitor.app.handlers.UploadTemperature;
+import com.github.steingrd.fermonitor.security.ProtectedHandler;
 import com.tempodb.client.Client;
 import com.tempodb.client.ClientBuilder;
 
@@ -33,6 +36,11 @@ public class StartFermonitorApp {
 			.secure(tempodbSecure())
 			.build();
 		
+		final IronCache ironCache = new DefaultIronCache(
+			ironCacheToken(), 
+			ironCacheProjectId(),
+			ironCacheCacheName());
+		
 		final Vertx vertx = VertxFactory.newVertx();
 		final HttpServer server = vertx.createHttpServer();
 		final RouteMatcher router = new RouteMatcher();
@@ -40,8 +48,8 @@ public class StartFermonitorApp {
 		router
 			.get("/", request -> { request.response().end("Hello, world!"); })
 			.get("/brews", new ListBrews(tempodb))
-			.post("/brews/:brewId", new CreateBrew(tempodb))
-			.post("/brews/:brewId/temperatures", new UploadTemperature(tempodb));
+			.post("/brews/:brewId", new ProtectedHandler(ironCache, new CreateBrew(tempodb)))
+			.post("/brews/:brewId/temperatures", new ProtectedHandler(ironCache, new UploadTemperature(tempodb)));
 		
 		server.requestHandler(router).listen(port(), asyncResult -> {
 			if (asyncResult.succeeded()) {
@@ -55,6 +63,18 @@ public class StartFermonitorApp {
 		new CountDownLatch(1).await();
 	}
 	
+	private static String ironCacheProjectId() {
+		return propertyOrEnvVariable("IRON_CACHE_PROJECT_ID");
+	}
+
+	private static String ironCacheToken() {
+		return propertyOrEnvVariable("IRON_CACHE_TOKEN");
+	}
+	
+	private static String ironCacheCacheName() {
+		return propertyOrEnvVariable("IRON_CACHE_CACHE_NAME");
+	}
+
 	private static boolean tempodbSecure() {
 		return Boolean.parseBoolean(propertyOrEnvVariable("TEMPODB_API_SECURE").toLowerCase());
 	}
@@ -70,12 +90,12 @@ public class StartFermonitorApp {
 	private static int tempodbPort() {
 		return Integer.parseInt(propertyOrEnvVariable("TEMPODB_API_PORT"));
 	}
-
+	
 	private static String tempodbHost() {
 		return propertyOrEnvVariable("TEMPODB_API_HOST");
 	}
 
-	static int port() {
+	private static int port() {
 		return Integer.parseInt(propertyOrEnvVariableWithDefault("PORT", "9090"));
 	}
 	
