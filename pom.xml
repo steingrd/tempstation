@@ -8,7 +8,7 @@
 
 	<properties>
 		<slf4j.version>1.7.7</slf4j.version>
-		<httpcomponents.version>4.2.1</httpcomponents.version>
+		<httpcomponents.version>4.2.2</httpcomponents.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	
