@@ -26,3 +26,5 @@
 	
 	- heroku run src/main/scripts/createkey.sh
 
+# debugging heroku run bash
+
