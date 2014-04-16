@@ -6,8 +6,10 @@
 	- magic follows
 	- explain what heroku is, what it does, and so on
 	- if install fails, previous version is still running (pre-receive hook fails, did not actually push)
+	- with CI -> easy autodeploy
 	- environment variables for configuration
 		- heroku plugins:install git://github.com/ddollar/heroku-config.git
+
 
 # heroku logs -t
 

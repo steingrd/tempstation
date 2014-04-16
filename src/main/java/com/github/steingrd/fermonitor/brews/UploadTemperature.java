@@ -1,4 +1,4 @@
-package com.github.steingrd.fermonitor.app.handlers;
+package com.github.steingrd.fermonitor.brews;
 
 import org.joda.time.DateTime;
 import org.slf4j.Logger;

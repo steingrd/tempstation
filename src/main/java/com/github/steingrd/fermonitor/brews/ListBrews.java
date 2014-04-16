@@ -1,4 +1,4 @@
-package com.github.steingrd.fermonitor.app.handlers;
+package com.github.steingrd.fermonitor.brews;
 
 import org.vertx.java.core.buffer.Buffer;
 import org.vertx.java.core.http.HttpServerRequest;

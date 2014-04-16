@@ -11,9 +11,9 @@ import org.vertx.java.core.http.RouteMatcher;
 
 import com.github.mrcritical.ironcache.DefaultIronCache;
 import com.github.mrcritical.ironcache.IronCache;
-import com.github.steingrd.fermonitor.app.handlers.CreateBrew;
-import com.github.steingrd.fermonitor.app.handlers.ListBrews;
-import com.github.steingrd.fermonitor.app.handlers.UploadTemperature;
+import com.github.steingrd.fermonitor.brews.CreateBrew;
+import com.github.steingrd.fermonitor.brews.ListBrews;
+import com.github.steingrd.fermonitor.brews.UploadTemperature;
 import com.github.steingrd.fermonitor.security.ProtectedHandler;
 import com.tempodb.client.Client;
 import com.tempodb.client.ClientBuilder;

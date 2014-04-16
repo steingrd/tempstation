@@ -1,4 +1,4 @@
-package com.github.steingrd.fermonitor.app.handlers;
+package com.github.steingrd.fermonitor.brews;
 
 import java.util.List;
 
