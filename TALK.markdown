@@ -13,9 +13,20 @@
 
 # heroku addons:open tempodb
 
+	- https://tempo-db.com/manage/
+
 # heroku addons:add iron_cache
 
 # heroku addons:open iron_cache
+
+	- Caches -> Fermonitor
+	- https://hud.iron.io/cache/projects/534cec5e557aa60009000114/caches/fermonitor
+
+# heroku addons:add sentry
+
+# heroku addons:open sentry
+
+	- https://app.getsentry.com/fermonitor/production/
 
 # heroku config
 

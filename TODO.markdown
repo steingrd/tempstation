@@ -1,2 +1,2 @@
-- configure sentry
 - make pretty front page
+- move stuff in handlers to a better named package

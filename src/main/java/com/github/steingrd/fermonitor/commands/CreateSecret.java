@@ -11,13 +11,21 @@ import com.github.mrcritical.ironcache.DefaultIronCache;
 import com.github.mrcritical.ironcache.IronCache;
 import com.github.steingrd.fermonitor.security.AuthorizationService;
 
-public class CreateKey {
+public class CreateSecret {
 
-	static final Logger log = LoggerFactory.getLogger(CreateKey.class);
+	static final Logger log = LoggerFactory.getLogger(CreateSecret.class);
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
+		try {
+			createSecret();
+		} catch (Exception e) {
+			log.error("CreateSecret failed!", e);
+		}
+	}
+	
+	public static void createSecret() {
 		if (args.length != 1) {
-			System.out.println("Missing args: " + args.length);
+			log.info("Missing args: " + args.length);
 			return;
 		}
 		
@@ -27,7 +35,7 @@ public class CreateKey {
 		String key = authRepo.createSecret(args[0]);
 		log.info("Created key: {} ", key);
 	}
-	
+
 	private static String ironCacheCacheName() {
 		return propertyOrEnvVariable("IRON_CACHE_CACHE_NAME");
 	}
