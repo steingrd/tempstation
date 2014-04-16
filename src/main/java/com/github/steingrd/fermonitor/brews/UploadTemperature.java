@@ -3,6 +3,7 @@ package com.github.steingrd.fermonitor.brews;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vertx.java.core.Vertx;
 import org.vertx.java.core.http.HttpServerRequest;
 
 import com.github.mrcritical.ironcache.IronCache;
@@ -18,8 +19,10 @@ public class UploadTemperature implements ThrowItAwayHandler<HttpServerRequest> 
 	
 	final Client tempodb;
 	final LastUpdatedService lastUpdated;
+	final Vertx vertx;
 	
-	public UploadTemperature(Client tempodb, IronCache ironCache) {
+	public UploadTemperature(Vertx vertx, Client tempodb, IronCache ironCache) {
+		this.vertx = vertx;
 		this.tempodb = tempodb;
 		this.lastUpdated = new LastUpdatedService(ironCache);
 	}
@@ -41,7 +44,10 @@ public class UploadTemperature implements ThrowItAwayHandler<HttpServerRequest> 
 		}
 		
 		log.debug("Successfully updated tempodb");
-		lastUpdated.updatedSuccessfully();
+		vertx.runOnContext(event -> {
+			lastUpdated.updatedSuccessfully();
+		});
+		
 		request.response().end();
 	}
 

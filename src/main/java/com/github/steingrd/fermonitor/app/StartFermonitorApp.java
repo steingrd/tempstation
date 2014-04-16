@@ -49,7 +49,7 @@ public class StartFermonitorApp {
 			.get("/", request -> { request.response().end("Hello, world!"); })
 			.get("/brews", new ListBrews(tempodb))
 			.post("/brews/:brewId", new ProtectedHandler(ironCache, new CreateBrew(tempodb)))
-			.post("/brews/:brewId/temperatures", new ProtectedHandler(ironCache, new UploadTemperature(tempodb, ironCache)));
+			.post("/brews/:brewId/temperatures", new ProtectedHandler(ironCache, new UploadTemperature(vertx, tempodb, ironCache)));
 		
 		server.requestHandler(router).listen(port(), asyncResult -> {
 			if (asyncResult.succeeded()) {
