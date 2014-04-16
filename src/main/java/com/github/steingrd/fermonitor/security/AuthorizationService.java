@@ -37,7 +37,7 @@ public class AuthorizationService {
 		log.debug("Authorizing key [{}] with secret [{}] against stored secret [{}]",
 			key, secret, cachedSecret);
 		
-		return secret.equals(cachedSecret);
+		return secret.equals(cachedSecret.getValue());
 	}
 	
 	private String randomSecret() {
