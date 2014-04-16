@@ -23,7 +23,7 @@ public class CreateSecret {
 		}
 	}
 	
-	public static void createSecret(String[] args) {
+	public static void createSecret(String[] args) throws Exception {
 		if (args.length != 1) {
 			log.info("Missing args: " + args.length);
 			return;

@@ -5,7 +5,9 @@
 # git push heroku master
 	- magic follows
 	- explain what heroku is, what it does, and so on
-	- heroku plugins:install git://github.com/ddollar/heroku-config.git
+	- if install fails, previous version is still running (pre-receive hook fails, did not actually push)
+	- environment variables for configuration
+		- heroku plugins:install git://github.com/ddollar/heroku-config.git
 
 # heroku logs -t
 
