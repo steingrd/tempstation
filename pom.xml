@@ -30,18 +30,6 @@
 				<version>2.4</version>
 				<executions>
 					<execution>
-						<id>copy-new-relic</id>
-						<phase>package</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<includeGroupIds>com.newrelic.agent.java</includeGroupIds>
-							<includeArtifactIds>newrelic-agent</includeArtifactIds>
-							<stripVersion>true</stripVersion>
-						</configuration>
-					</execution>
-					<execution>
 						<id>copy-dependencies</id>
 						<phase>package</phase>
 						<goals>
