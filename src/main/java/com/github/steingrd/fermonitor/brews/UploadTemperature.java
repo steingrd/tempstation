@@ -45,8 +45,8 @@ public class UploadTemperature implements ThrowItAwayHandler<HttpServerRequest> 
 		
 		log.debug("Successfully updated tempodb");
 		
-		lastUpdated.updatedSuccessfully();
-		log.debug("Successfully updated ironcache");
+//		lastUpdated.updatedSuccessfully();
+//		log.debug("Successfully updated ironcache");
 		
 		request.response().end();
 	}
