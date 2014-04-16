@@ -1,0 +1,2 @@
+- configure sentry
+- make pretty front page

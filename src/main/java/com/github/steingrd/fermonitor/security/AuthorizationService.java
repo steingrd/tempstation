@@ -33,6 +33,10 @@ public class AuthorizationService {
 			log.error("Failed to retrieve cache item", e);
 			return false;
 		}
+		
+		log.debug("Authorizing key [{}] with secret [{}] against stored secret [{}]",
+			key, secret, cachedSecret);
+		
 		return secret.equals(cachedSecret);
 	}
 	
