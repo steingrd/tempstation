@@ -44,9 +44,9 @@ public class UploadTemperature implements ThrowItAwayHandler<HttpServerRequest> 
 		}
 		
 		log.debug("Successfully updated tempodb");
-		vertx.runOnContext(event -> {
-			lastUpdated.updatedSuccessfully();
-		});
+		
+		lastUpdated.updatedSuccessfully();
+		log.debug("Successfully updated ironcache");
 		
 		request.response().end();
 	}
