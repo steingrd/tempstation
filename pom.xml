@@ -8,6 +8,7 @@
 
 	<properties>
 		<slf4j.version>1.7.7</slf4j.version>
+		<raven.version>4.0</raven.version>
 		<httpcomponents.version>4.2.2</httpcomponents.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -49,6 +50,17 @@
 	</build>
 
 	<dependencies>
+		<!-- raven, used by getsentry.com -->
+		<dependency>
+			<groupId>net.kencochrane.raven</groupId>
+			<artifactId>raven</artifactId>
+			<version>${raven.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.kencochrane.raven</groupId>
+			<artifactId>raven-log4j</artifactId>
+			<version>${raven.version}</version>
+		</dependency>
 		<!-- tempodb client -->
 		<dependency>
 			<groupId>com.tempodb</groupId>
