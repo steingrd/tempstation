@@ -16,7 +16,15 @@ public class VerifyUploads {
 
 	static final Logger log = LoggerFactory.getLogger(VerifyUploads.class);
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
+		try {
+			verifyUploads();
+		} catch (Exception e) {
+			log.error("VerifyUploads failed!", e);
+		}
+	}
+
+	public static void verifyUploads() {
 		IronCache ironCache = new DefaultIronCache(ironCacheToken(), ironCacheProjectId(), ironCacheCacheName());
 
 		CacheItem cachedTimestamp;
@@ -28,7 +36,7 @@ public class VerifyUploads {
 		}
 
 		DateTime lastUpdated = DateTime.parse(cachedTimestamp.getValue());
-		if (lastUpdated.plusMinutes(90).isBeforeNow()) {
+		if (lastUpdated.plusMinutes(5).isBeforeNow()) {
 			log.warn("Last update to database was on {}", lastUpdated);
 		}
 	}
