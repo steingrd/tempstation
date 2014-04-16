@@ -1,15 +1,13 @@
 package com.github.steingrd.fermonitor.commands;
 
-import static com.github.steingrd.fermonitor.app.EnvironmentUtils.propertyOrEnvVariable;
-
-import java.io.IOException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.github.mrcritical.ironcache.DefaultIronCache;
 import com.github.mrcritical.ironcache.IronCache;
 import com.github.steingrd.fermonitor.security.AuthorizationService;
+
+import static com.github.steingrd.fermonitor.app.EnvironmentUtils.propertyOrEnvVariable;
 
 public class CreateSecret {
 

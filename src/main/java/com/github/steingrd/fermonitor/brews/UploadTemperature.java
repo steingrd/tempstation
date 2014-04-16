@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vertx.java.core.http.HttpServerRequest;
 
+import com.github.mrcritical.ironcache.IronCache;
 import com.github.steingrd.fermonitor.app.ThrowItAwayHandler;
 import com.tempodb.client.Client;
 import com.tempodb.models.DataPoint;
@@ -16,9 +17,11 @@ public class UploadTemperature implements ThrowItAwayHandler<HttpServerRequest> 
 	final Logger log = LoggerFactory.getLogger(UploadTemperature.class);
 	
 	final Client tempodb;
+	final LastUpdatedService lastUpdated;
 	
-	public UploadTemperature(Client tempodb) {
+	public UploadTemperature(Client tempodb, IronCache ironCache) {
 		this.tempodb = tempodb;
+		this.lastUpdated = new LastUpdatedService(ironCache);
 	}
 
 	@Override
@@ -38,6 +41,7 @@ public class UploadTemperature implements ThrowItAwayHandler<HttpServerRequest> 
 		}
 		
 		log.debug("Successfully updated tempodb");
+		lastUpdated.updatedSuccessfully();
 		request.response().end();
 	}
 
