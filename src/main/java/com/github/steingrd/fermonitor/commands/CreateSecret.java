@@ -17,13 +17,13 @@ public class CreateSecret {
 	
 	public static void main(String[] args) {
 		try {
-			createSecret();
+			createSecret(args);
 		} catch (Exception e) {
 			log.error("CreateSecret failed!", e);
 		}
 	}
 	
-	public static void createSecret() {
+	public static void createSecret(String[] args) {
 		if (args.length != 1) {
 			log.info("Missing args: " + args.length);
 			return;
