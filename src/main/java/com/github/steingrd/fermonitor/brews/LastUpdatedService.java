@@ -15,14 +15,16 @@ public class LastUpdatedService {
 	final Logger log = LoggerFactory.getLogger(LastUpdatedService.class);
 	
 	final IronCache ironCache;
+	final String cacheKey;
 
 	public LastUpdatedService(IronCache ironCache) {
 		this.ironCache = ironCache;
+		this.cacheKey = fermonitorTimestampItem();
 	}
 
 	public void updatedSuccessfully() {
 		try {
-			this.ironCache.put(fermonitorTimestampItem(), DateTime.now().toString());
+			this.ironCache.put(cacheKey, DateTime.now().toString());
 		} catch (IOException e) {
 			log.error("Failed to update Last Updated cache.", e);
 		}
