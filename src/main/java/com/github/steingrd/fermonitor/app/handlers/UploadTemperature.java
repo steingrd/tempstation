@@ -1,6 +1,8 @@
 package com.github.steingrd.fermonitor.app.handlers;
 
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vertx.java.core.http.HttpServerRequest;
 
 import com.github.steingrd.fermonitor.app.ThrowItAwayHandler;
@@ -11,6 +13,8 @@ import static com.google.common.collect.Lists.newArrayList;
 
 public class UploadTemperature implements ThrowItAwayHandler<HttpServerRequest> {
 
+	final Logger log = LoggerFactory.getLogger(UploadTemperature.class);
+	
 	final Client tempodb;
 	
 	public UploadTemperature(Client tempodb) {
@@ -18,12 +22,23 @@ public class UploadTemperature implements ThrowItAwayHandler<HttpServerRequest> 
 	}
 
 	@Override
-	public void handleAndThrow(HttpServerRequest request) throws Exception{
+	public void handleAndThrow(HttpServerRequest request) {
 		String brewId = request.params().get("brewId");
 		DateTime timestamp = DateTime.parse(request.params().get("timestamp"));
 		double temperature = Double.parseDouble(request.params().get("temperature"));
 		
-		tempodb.writeKey(brewId, newArrayList(new DataPoint(timestamp, temperature)));
+		log.debug("Writing timestamp {} and temperature to tempodb {}.", timestamp, temperature);
+		
+		try {
+			tempodb.writeKey(brewId, newArrayList(new DataPoint(timestamp, temperature)));
+		} catch (Exception e) {
+			log.error("Failed to update tempodb", e);
+			request.response().setStatusCode(500).end(e.getMessage());
+			return;
+		}
+		
+		log.debug("Successfully updated tempodb");
+		request.response().end();
 	}
 
 }
