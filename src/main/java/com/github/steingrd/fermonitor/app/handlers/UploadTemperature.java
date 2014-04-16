@@ -21,7 +21,7 @@ public class UploadTemperature implements ThrowItAwayHandler<HttpServerRequest> 
 	public void handleAndThrow(HttpServerRequest request) throws Exception{
 		String brewId = request.params().get("brewId");
 		DateTime timestamp = DateTime.parse(request.params().get("timestamp"));
-		int temperature = Integer.parseInt(request.params().get("temperature"));
+		double temperature = Double.parseDouble(request.params().get("temperature"));
 		
 		tempodb.writeKey(brewId, newArrayList(new DataPoint(timestamp, temperature)));
 	}
