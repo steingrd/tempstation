@@ -32,6 +32,10 @@
 
 	- https://app.getsentry.com/fermonitor/production/
 
+# heroku addons:add statushub
+
+	- http://fermonitor.statushub.io/
+
 # heroku config
 
 	- explain environment variables
