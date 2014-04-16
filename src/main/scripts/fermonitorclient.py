@@ -20,7 +20,12 @@ def get_auth_secret():
 	return sys.argv[3]
 
 def read_temperature():
-	return temperusb.TemperHandler().get_devices()[0].get_temperature()
+	try:
+		t = temperusb.TemperHandler().get_devices()[0].get_temperature()
+		return t
+	except: 
+		print 'Ooops, could not retrieve temperature'
+		return None
 
 def make_url(brew_id, timestamp, temperature):
 	return '%s/brews/%s/temperatures?timestamp=%s&temperature=%s' % \
@@ -45,7 +50,9 @@ def make_timestamp():
 	return datetime.datetime.now().isoformat()
 
 def read_and_post():
-	post_temperature(get_brew_id(), make_timestamp(), read_temperature())
+	temperature = read_temperature()
+	if temperature is not None:
+		post_temperature(get_brew_id(), make_timestamp(), temperature)
 	schedule_task(read_and_post)
 
 if __name__ == '__main__':
