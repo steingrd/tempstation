@@ -1,6 +1,6 @@
 package com.github.steingrd.fermonitor.app;
 
-import static com.github.steingrd.fermonitor.app.EnvironmentUtils.propertyOrEnvVariableWithDefault;
+import static com.github.steingrd.fermonitor.app.Configuration.get;
 
 public class FeatureToggle {
 
@@ -13,7 +13,7 @@ public class FeatureToggle {
 	
 	public boolean shouldUpdateLastUpdatedTimestamp() {
 		if (updateLastUpdatedTimestamp == null) {
-			updateLastUpdatedTimestamp = Boolean.valueOf(propertyOrEnvVariableWithDefault("FEATURE_LAST_UPDATED", "false"));
+			updateLastUpdatedTimestamp = Boolean.valueOf(get("FEATURE_LAST_UPDATED", "false"));
 		}
 		
 		return updateLastUpdatedTimestamp;
@@ -21,7 +21,7 @@ public class FeatureToggle {
 
 	public boolean tempoDbEnabled() {
 		if (enableTempoDb == null) {
-			enableTempoDb = Boolean.valueOf(propertyOrEnvVariableWithDefault("FEATURE_TEMPO_DB", "true"));
+			enableTempoDb = Boolean.valueOf(get("FEATURE_TEMPO_DB", "true"));
 		}
 		
 		return enableTempoDb;
@@ -29,7 +29,7 @@ public class FeatureToggle {
 	
 	public boolean ironCacheEnabled() {
 		if (enableIronCache == null) {
-			enableIronCache = Boolean.valueOf(propertyOrEnvVariableWithDefault("FEATURE_IRON_CACHE", "true"));
+			enableIronCache = Boolean.valueOf(get("FEATURE_IRON_CACHE", "true"));
 		}
 		
 		return enableIronCache;
@@ -37,7 +37,7 @@ public class FeatureToggle {
 	
 	public boolean redisCloudEnabled() {
 		if (enableRedisCloud == null) {
-			enableRedisCloud = Boolean.valueOf(propertyOrEnvVariableWithDefault("FEATURE_REDIS_CLOUD", "true"));
+			enableRedisCloud = Boolean.valueOf(get("FEATURE_REDIS_CLOUD", "true"));
 		}
 		
 		return enableRedisCloud;
@@ -45,7 +45,7 @@ public class FeatureToggle {
 
 	public boolean verifyUploadsEnabled() {
 		if (verifyUploadsEnabled == null) {
-			verifyUploadsEnabled = Boolean.valueOf(propertyOrEnvVariableWithDefault("FEATURE_VERIFY_UPLOADS", "true"));
+			verifyUploadsEnabled = Boolean.valueOf(get("FEATURE_VERIFY_UPLOADS", "true"));
 		}
 		
 		return verifyUploadsEnabled;
@@ -53,7 +53,7 @@ public class FeatureToggle {
 
 	public boolean useClasspathForStaticResources() {
 		if (useClasspathForStaticResources == null) {
-			useClasspathForStaticResources = Boolean.valueOf(propertyOrEnvVariableWithDefault("FEATURE_RESOURCES_FROM_CLASSPATH", "true"));
+			useClasspathForStaticResources = Boolean.valueOf(get("FEATURE_RESOURCES_FROM_CLASSPATH", "true"));
 		}
 		
 		return useClasspathForStaticResources;

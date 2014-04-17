@@ -3,7 +3,7 @@ package com.github.steingrd.fermonitor.app;
 import com.tempodb.client.Client;
 import com.tempodb.client.ClientBuilder;
 
-import static com.github.steingrd.fermonitor.app.EnvironmentUtils.propertyOrEnvVariable;
+import static com.github.steingrd.fermonitor.app.Configuration.get;
 
 public class TempoDbFactory {
 
@@ -22,23 +22,23 @@ public class TempoDbFactory {
 	}
 
 	private static boolean tempodbSecure() {
-		return Boolean.parseBoolean(propertyOrEnvVariable("TEMPODB_API_SECURE").toLowerCase());
+		return Boolean.parseBoolean(get("TEMPODB_API_SECURE").toLowerCase());
 	}
 
 	private static String tempodbSecret() {
-		return propertyOrEnvVariable("TEMPODB_API_SECRET");
+		return get("TEMPODB_API_SECRET");
 	}
 
 	private static String tempodbKey() {
-		return propertyOrEnvVariable("TEMPODB_API_KEY");
+		return get("TEMPODB_API_KEY");
 	}
 
 	private static int tempodbPort() {
-		return Integer.parseInt(propertyOrEnvVariable("TEMPODB_API_PORT"));
+		return Integer.parseInt(get("TEMPODB_API_PORT"));
 	}
 	
 	private static String tempodbHost() {
-		return propertyOrEnvVariable("TEMPODB_API_HOST");
+		return get("TEMPODB_API_HOST");
 	}
 	
 }

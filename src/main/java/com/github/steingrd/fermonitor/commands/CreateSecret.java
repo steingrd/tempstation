@@ -7,7 +7,7 @@ import com.github.mrcritical.ironcache.DefaultIronCache;
 import com.github.mrcritical.ironcache.IronCache;
 import com.github.steingrd.fermonitor.security.AuthorizationService;
 
-import static com.github.steingrd.fermonitor.app.EnvironmentUtils.propertyOrEnvVariable;
+import static com.github.steingrd.fermonitor.app.Configuration.get;
 
 public class CreateSecret {
 
@@ -35,14 +35,14 @@ public class CreateSecret {
 	}
 
 	private static String ironCacheCacheName() {
-		return propertyOrEnvVariable("IRON_CACHE_CACHE_NAME");
+		return get("IRON_CACHE_CACHE_NAME");
 	}
 	
 	private static String ironCacheProjectId() {
-		return propertyOrEnvVariable("IRON_CACHE_PROJECT_ID");
+		return get("IRON_CACHE_PROJECT_ID");
 	}
 
 	private static String ironCacheToken() {
-		return propertyOrEnvVariable("IRON_CACHE_TOKEN");
+		return get("IRON_CACHE_TOKEN");
 	}
 }

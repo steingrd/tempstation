@@ -10,7 +10,7 @@ import redis.clients.jedis.JedisPool;
 import com.github.steingrd.fermonitor.app.FeatureToggle;
 import com.github.steingrd.fermonitor.app.JedisPoolFactory;
 
-import static com.github.steingrd.fermonitor.app.EnvironmentUtils.propertyOrEnvVariable;
+import static com.github.steingrd.fermonitor.app.Configuration.get;
 
 public class VerifyUploads {
 
@@ -55,7 +55,7 @@ public class VerifyUploads {
 	}
 
 	private static String fermonitorTimestampItem() {
-		return propertyOrEnvVariable("FERMONITOR_TIMESTAMP_ITEM");
+		return get("FERMONITOR_TIMESTAMP_ITEM");
 	}
 	
 	

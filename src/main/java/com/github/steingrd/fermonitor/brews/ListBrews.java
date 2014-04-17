@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.steingrd.fermonitor.app.ThrowItAwayHandler;
 
-import static com.github.steingrd.fermonitor.app.EnvironmentUtils.propertyOrEnvVariable;
+import static com.github.steingrd.fermonitor.app.Configuration.get;
 
 public class ListBrews implements ThrowItAwayHandler<HttpServerRequest> {
 
@@ -21,7 +21,7 @@ public class ListBrews implements ThrowItAwayHandler<HttpServerRequest> {
 
 	public ListBrews(JedisPool jedisPool) {
 		this.jedisPool = jedisPool;
-		this.brewsSetKey = propertyOrEnvVariable("FERMONITOR_BREWS_LIST");
+		this.brewsSetKey = get("FERMONITOR_BREWS_LIST");
 		
 	}
 

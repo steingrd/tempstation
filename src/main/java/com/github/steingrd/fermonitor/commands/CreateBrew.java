@@ -14,7 +14,7 @@ import com.github.steingrd.fermonitor.app.TempoDbFactory;
 import com.github.steingrd.fermonitor.security.AuthorizationService;
 import com.tempodb.client.Client;
 
-import static com.github.steingrd.fermonitor.app.EnvironmentUtils.propertyOrEnvVariable;
+import static com.github.steingrd.fermonitor.app.Configuration.get;
 
 public class CreateBrew {
 
@@ -34,7 +34,7 @@ public class CreateBrew {
 			return;
 		}
 		
-		final String brewsSet = propertyOrEnvVariable("FERMONITOR_BREWS_LIST");
+		final String brewsSet = get("FERMONITOR_BREWS_LIST");
 		final String brewId = args[0];
 		
 		final IronCache ironCache = new IronCacheFactory().create();

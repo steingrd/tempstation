@@ -17,7 +17,7 @@ import com.github.steingrd.fermonitor.brews.UploadTemperature;
 import com.github.steingrd.fermonitor.security.ProtectedHandler;
 import com.tempodb.client.Client;
 
-import static com.github.steingrd.fermonitor.app.EnvironmentUtils.propertyOrEnvVariableWithDefault;
+import static com.github.steingrd.fermonitor.app.Configuration.get;
 
 public class StartFermonitorApp {
 
@@ -70,7 +70,7 @@ public class StartFermonitorApp {
 	}
 
 	private static int port() {
-		return Integer.parseInt(propertyOrEnvVariableWithDefault("PORT", "9090"));
+		return Integer.parseInt(get("PORT", "9090"));
 	}
 	
 }
