@@ -1,32 +1,28 @@
-var controllers = angular.module('controllers', []);
+var fControllers = angular.module('fControllers', []);
 
-controllers.controller('StartPageController', ['$scope', function($scope) {
-}]);
+fControllers.controller('StartController', ['$scope', function($scope) {
+	}]);
 
-controllers.controller('BrewsPageController', ['$scope', '$http', function($scope, $http) {
 
-	$scope.refresh = function() {
-		
-		$http.get('/brews').success(function(data) {
-			console.log("FOO");
-			console.log(JSON.stringify(data));
-			$scope.brews = data;
-		});
-		
-	};
+fControllers.controller('BrewController', ['$scope', '$routeParams', 
 
-	$scope.brews = [];
-	$scope.refresh();
+	function($scope, $routeParams) {
+		console.log($routeParams.id);
+		$scope.brew = $routeParams.id;
+	}]);
 
-}]);
 
-controllers.controller('BrewDetailsController', ['$scope', '$http', function($scope, $http) {
+fControllers.controller('ListBrewsController', ['$scope', '$http', 
 
-	$scope.brews = [
-		{
-			"key": "testbrew",
-			"lastUpdated": "2014-04-17T16:16:42"
-		}
-	];
+	function($scope, $http) {
 
-}]);
+		$scope.refresh = function() {
+			$http.get('/brews').success(function(data) {
+				$scope.brews = data;
+			});
+		};
+
+		$scope.brews = [];
+		$scope.refresh();
+
+	}]);

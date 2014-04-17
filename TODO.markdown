@@ -1,1 +1,2 @@
-- make pretty front page
+- verifyuploads.sh should check env for which brew to verify
+- remove ironcache addon

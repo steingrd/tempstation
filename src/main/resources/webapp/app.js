@@ -1,24 +1,24 @@
-var app = angular.module('app', [
+var fApp = angular.module('fApp', [
 		'ngRoute',
-		'controllers'
+		'fControllers'
 	]);
 
-app.config(['$routeProvider',
+fApp.config(['$routeProvider',
 	function($routeProvider) {
 		$routeProvider
 			.when('/', {
 				templateUrl: 'partials/index.html',
-				controller: 'StartPageController'
-			})
-			
-			.when('/brews', {
-				templateUrl: 'partials/brews.html',
-				controller: 'BrewsPageController'
+				controller: 'StartController'
 			})
 
-			.when('/brews/:brewId', {
+			.when('/brews/:id', {
 				templateUrl: 'partials/brewDetails.html',
-				controller: 'BrewDetailsController'
+				controller: 'BrewController'
+			})
+
+			.when('/brews', {
+				templateUrl: 'partials/brews.html',
+				controller: 'ListBrewsController'
 			})
 
 			.otherwise({
