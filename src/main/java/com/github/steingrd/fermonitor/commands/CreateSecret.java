@@ -1,7 +1,5 @@
 package com.github.steingrd.fermonitor.commands;
 
-import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,11 +7,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 import com.github.steingrd.fermonitor.app.JedisPoolFactory;
-import com.github.steingrd.fermonitor.app.TempoDbFactory;
 import com.github.steingrd.fermonitor.security.AuthorizationService;
-import com.tempodb.client.Client;
-
-import static com.github.steingrd.fermonitor.app.Configuration.get;
 
 public class CreateSecret {
 

@@ -36,7 +36,6 @@ public class AuthorizationService {
 			
 			return secret.equals(cachedSecret);
 		}
-		
 	}
 	
 	private String randomSecret() {

@@ -12,6 +12,7 @@ import org.vertx.java.core.http.RouteMatcher;
 import redis.clients.jedis.JedisPool;
 
 import com.github.steingrd.fermonitor.brews.ListBrews;
+import com.github.steingrd.fermonitor.brews.Temperatures;
 import com.github.steingrd.fermonitor.brews.UploadTemperature;
 import com.github.steingrd.fermonitor.security.ProtectedHandler;
 import com.tempodb.client.Client;
@@ -38,8 +39,8 @@ public class StartFermonitorApp {
 					String base = staticResources(featureToggle);
 					request.response().sendFile(base + "/index.html"); 
 				})
-			.get("/brews", 
-					new ListBrews(jedisPool))
+			.get ("/brews", new ListBrews(jedisPool))
+			.get ("/brews/:brewId/temperatures", new Temperatures(tempodb, jedisPool))
 			.post("/brews/:brewId/temperatures", 
 					new ProtectedHandler(jedisPool, new UploadTemperature(tempodb, jedisPool)))
 			.noMatch(request -> {
