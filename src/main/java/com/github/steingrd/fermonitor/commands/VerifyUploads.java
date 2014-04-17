@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.Protocol;
 import static com.github.steingrd.fermonitor.app.EnvironmentUtils.propertyOrEnvVariable;
 
 public class VerifyUploads {
@@ -30,7 +31,9 @@ public class VerifyUploads {
 		final JedisPool jedisPool = new JedisPool(
 				new JedisPoolConfig(), 
 				jedisHost(), 
-				jedisPort());
+				jedisPort(),
+				Protocol.DEFAULT_TIMEOUT,
+				jedisPassword());
 		
 		Jedis jedis = null;
 		String cachedTimestamp = null;
@@ -57,6 +60,11 @@ public class VerifyUploads {
 
 	private static String fermonitorTimestampItem() {
 		return propertyOrEnvVariable("FERMONITOR_TIMESTAMP_ITEM");
+	}
+	
+	private static String jedisPassword() throws URISyntaxException {
+		URI uri = new URI(propertyOrEnvVariable("REDISCLOUD_URL"));
+		return uri.getUserInfo().split(":",2)[1];
 	}
 	
 	private static int jedisPort() throws URISyntaxException {
