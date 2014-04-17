@@ -10,18 +10,22 @@ import static com.github.steingrd.fermonitor.app.EnvironmentUtils.propertyOrEnvV
 public class JedisPoolFactory {
 
 	public JedisPool create() {
-		try {
-			URI uri = new URI(propertyOrEnvVariable("REDISCLOUD_URL"));
-			
-			return new JedisPool(
-				new JedisPoolConfig(), 
-				uri.getHost(), 
-				uri.getPort(),
-				Protocol.DEFAULT_TIMEOUT,
-				uri.getUserInfo().split(":",2)[1]);
-			
-		} catch (Exception e) {
-			throw new RuntimeException("Could not create JedisPool", e);
+		if (new FeatureToggle().redisCloudEnabled()) {
+			try {
+				URI uri = new URI(propertyOrEnvVariable("REDISCLOUD_URL"));
+				
+				return new JedisPool(
+					new JedisPoolConfig(), 
+					uri.getHost(), 
+					uri.getPort(),
+					Protocol.DEFAULT_TIMEOUT,
+					uri.getUserInfo().split(":",2)[1]);
+				
+			} catch (Exception e) {
+				throw new RuntimeException("Could not create JedisPool", e);
+			}
+		} else {
+			return null;
 		}
 	}
 

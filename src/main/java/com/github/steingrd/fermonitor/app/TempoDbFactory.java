@@ -8,13 +8,17 @@ import static com.github.steingrd.fermonitor.app.EnvironmentUtils.propertyOrEnvV
 public class TempoDbFactory {
 
 	public Client create() {
-		return new ClientBuilder()
-			.host(tempodbHost())
-			.port(tempodbPort())
-			.key(tempodbKey())
-			.secret(tempodbSecret())
-			.secure(tempodbSecure())
-			.build();
+		if (new FeatureToggle().tempoDbEnabled()) {
+			return new ClientBuilder()
+				.host(tempodbHost())
+				.port(tempodbPort())
+				.key(tempodbKey())
+				.secret(tempodbSecret())
+				.secure(tempodbSecure())
+				.build();
+		} else {
+			return null;
+		}
 	}
 
 	private static boolean tempodbSecure() {

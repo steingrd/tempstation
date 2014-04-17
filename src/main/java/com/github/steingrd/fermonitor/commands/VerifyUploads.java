@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import com.github.steingrd.fermonitor.app.FeatureToggle;
 import com.github.steingrd.fermonitor.app.JedisPoolFactory;
 
 import static com.github.steingrd.fermonitor.app.EnvironmentUtils.propertyOrEnvVariable;
@@ -17,7 +18,9 @@ public class VerifyUploads {
 	
 	public static void main(String[] args) {
 		try {
-			verifyUploads();
+			if (new FeatureToggle().verifyUploadsEnabled()) {
+				verifyUploads();
+			}
 		} catch (Exception e) {
 			log.error("VerifyUploads failed!", e);
 		}

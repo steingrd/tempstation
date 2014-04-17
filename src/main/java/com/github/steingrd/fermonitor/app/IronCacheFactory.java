@@ -8,7 +8,11 @@ import static com.github.steingrd.fermonitor.app.EnvironmentUtils.propertyOrEnvV
 public class IronCacheFactory {
 
 	public IronCache create() {
-		return new DefaultIronCache(ironCacheToken(), ironCacheProjectId(), ironCacheCacheName());
+		if (new FeatureToggle().ironCacheEnabled()) {
+			return new DefaultIronCache(ironCacheToken(), ironCacheProjectId(), ironCacheCacheName());
+		} else {
+			return null;
+		}
 	}
 
 	private static String ironCacheProjectId() {
