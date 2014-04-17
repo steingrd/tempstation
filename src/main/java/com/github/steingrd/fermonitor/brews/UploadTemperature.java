@@ -7,6 +7,7 @@ import org.vertx.java.core.http.HttpServerRequest;
 
 import redis.clients.jedis.JedisPool;
 
+import com.github.steingrd.fermonitor.app.FeatureToggle;
 import com.github.steingrd.fermonitor.app.ThrowItAwayHandler;
 import com.tempodb.client.Client;
 import com.tempodb.models.DataPoint;
@@ -17,12 +18,14 @@ public class UploadTemperature implements ThrowItAwayHandler<HttpServerRequest> 
 
 	final Logger log = LoggerFactory.getLogger(UploadTemperature.class);
 	
+	final FeatureToggle featureToggle;
 	final Client tempodb;
 	final LastUpdatedService lastUpdated;
 	
 	public UploadTemperature(Client tempodb, JedisPool jedis) {
 		this.tempodb = tempodb;
 		this.lastUpdated = new LastUpdatedService(jedis);
+		this.featureToggle = new FeatureToggle();
 	}
 
 	@Override
@@ -42,6 +45,11 @@ public class UploadTemperature implements ThrowItAwayHandler<HttpServerRequest> 
 		}
 		
 		log.debug("Successfully updated tempodb");
+		
+		if (featureToggle.shouldUpdateLastUpdatedTimestamp()) {
+			lastUpdated.updatedSuccessfully();
+			log.debug("Successfully updated redis");
+		}
 		
 		request.response().end();
 	}
