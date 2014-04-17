@@ -51,12 +51,11 @@
 	</build>
 
 	<dependencies>
-		<!-- newrelic agent -->
+		<!-- redis client -->
 		<dependency>
-			<groupId>com.newrelic.agent.java</groupId>
-			<artifactId>newrelic-agent</artifactId>
-			<version>3.4.2</version>
-			<scope>provided</scope>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.0.0</version>
 		</dependency>
 		<!-- raven, used by getsentry.com -->
 		<dependency>
