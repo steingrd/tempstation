@@ -1,16 +1,14 @@
 package com.github.steingrd.fermonitor.commands;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.Protocol;
+
+import com.github.steingrd.fermonitor.app.JedisPoolFactory;
+
 import static com.github.steingrd.fermonitor.app.EnvironmentUtils.propertyOrEnvVariable;
 
 public class VerifyUploads {
@@ -28,12 +26,7 @@ public class VerifyUploads {
 	public static void verifyUploads() throws Exception {
 		
 		String cacheKey = fermonitorTimestampItem();
-		final JedisPool jedisPool = new JedisPool(
-				new JedisPoolConfig(), 
-				jedisHost(), 
-				jedisPort(),
-				Protocol.DEFAULT_TIMEOUT,
-				jedisPassword());
+		JedisPool jedisPool = new JedisPoolFactory().create();
 		
 		Jedis jedis = null;
 		String cachedTimestamp = null;
@@ -62,19 +55,6 @@ public class VerifyUploads {
 		return propertyOrEnvVariable("FERMONITOR_TIMESTAMP_ITEM");
 	}
 	
-	private static String jedisPassword() throws URISyntaxException {
-		URI uri = new URI(propertyOrEnvVariable("REDISCLOUD_URL"));
-		return uri.getUserInfo().split(":",2)[1];
-	}
 	
-	private static int jedisPort() throws URISyntaxException {
-		URI uri = new URI(propertyOrEnvVariable("REDISCLOUD_URL"));
-		return uri.getPort();
-	}
-
-	private static String jedisHost() throws URISyntaxException {
-		URI uri = new URI(propertyOrEnvVariable("REDISCLOUD_URL"));
-		return uri.getHost();
-	}
 	
 }
