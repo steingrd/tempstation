@@ -3,16 +3,16 @@ package com.github.steingrd.fermonitor.security;
 import org.vertx.java.core.Handler;
 import org.vertx.java.core.http.HttpServerRequest;
 
-import com.github.mrcritical.ironcache.IronCache;
+import redis.clients.jedis.JedisPool;
 
 public class ProtectedHandler implements Handler<HttpServerRequest> {
 
 	final Handler<HttpServerRequest> handler;
 	final AuthorizationService authService;
 
-	public ProtectedHandler(IronCache ironCache, Handler<HttpServerRequest> handler) {
+	public ProtectedHandler(JedisPool jedisPool, Handler<HttpServerRequest> handler) {
 		this.handler = handler;
-		this.authService = new AuthorizationService(ironCache);
+		this.authService = new AuthorizationService(jedisPool);
 	}
 
 	@Override

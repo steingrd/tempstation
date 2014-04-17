@@ -111,13 +111,6 @@
 			<version>1.1.1</version>
 		</dependency>
 
-		<!-- ironcache client -->
-		<dependency>
-			<groupId>com.github.mrcritical</groupId>
-			<artifactId>ironcache</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-
 		<!-- apache httpclient - tempodb and ironcache depend on 
 		different versions, let's go for latest and greatest -->
 		<dependency>

@@ -6,9 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
-import com.github.mrcritical.ironcache.IronCache;
-import com.github.steingrd.fermonitor.app.IronCacheFactory;
 import com.github.steingrd.fermonitor.app.JedisPoolFactory;
 import com.github.steingrd.fermonitor.app.TempoDbFactory;
 import com.github.steingrd.fermonitor.security.AuthorizationService;
@@ -37,10 +36,11 @@ public class CreateBrew {
 		final String brewsSet = get("FERMONITOR_BREWS_LIST");
 		final String brewId = args[0];
 		
-		final IronCache ironCache = new IronCacheFactory().create();
+		final JedisPool jedisPool = new JedisPoolFactory().create();
+		final AuthorizationService authService = new AuthorizationService(jedisPool);
 		final Client tempodb = new TempoDbFactory().create();
 		
-		try (Jedis jedis = new JedisPoolFactory().create().getResource()) {
+		try (Jedis jedis = jedisPool.getResource()) {
 			
 			Set<String> brews = jedis.smembers(brewsSet);
 			if (brews.contains(brewId)) {
@@ -51,7 +51,7 @@ public class CreateBrew {
 				jedis.set(brewId + ".lastUpdated", "<>");
 				log.info("Created brew with key {}", brewId);
 				
-				String secret = new AuthorizationService(ironCache).createSecret(brewId);
+				String secret = authService.createSecret(brewId);
 				log.info("Secret for brew {} is {} ", brewId, secret);
 			}
 			

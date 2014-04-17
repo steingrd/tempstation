@@ -11,7 +11,6 @@ import org.vertx.java.core.http.RouteMatcher;
 
 import redis.clients.jedis.JedisPool;
 
-import com.github.mrcritical.ironcache.IronCache;
 import com.github.steingrd.fermonitor.brews.ListBrews;
 import com.github.steingrd.fermonitor.brews.UploadTemperature;
 import com.github.steingrd.fermonitor.security.ProtectedHandler;
@@ -27,7 +26,6 @@ public class StartFermonitorApp {
 		log.info("Starting FermonitorApp...");
 		
 		final Client tempodb = new TempoDbFactory().create();
-		final IronCache ironCache = new IronCacheFactory().create();
 		final JedisPool jedisPool = new JedisPoolFactory().create();
 		
 		final Vertx vertx = VertxFactory.newVertx();
@@ -43,7 +41,7 @@ public class StartFermonitorApp {
 			.get("/brews", 
 					new ListBrews(jedisPool))
 			.post("/brews/:brewId/temperatures", 
-					new ProtectedHandler(ironCache, new UploadTemperature(tempodb, jedisPool)))
+					new ProtectedHandler(jedisPool, new UploadTemperature(tempodb, jedisPool)))
 			.noMatch(request -> {
 					String base = staticResources(featureToggle);
 					request.response().sendFile(base + request.path(), base + "/404.html");
