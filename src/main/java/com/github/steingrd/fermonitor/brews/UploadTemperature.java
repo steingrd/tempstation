@@ -47,7 +47,7 @@ public class UploadTemperature implements ThrowItAwayHandler<HttpServerRequest> 
 		log.debug("Successfully updated tempodb");
 		
 		if (featureToggle.shouldUpdateLastUpdatedTimestamp()) {
-			lastUpdated.updatedSuccessfully();
+			lastUpdated.updatedSuccessfully(brewId);
 			log.debug("Successfully updated redis");
 		}
 		

@@ -12,7 +12,6 @@ import org.vertx.java.core.http.RouteMatcher;
 import redis.clients.jedis.JedisPool;
 
 import com.github.mrcritical.ironcache.IronCache;
-import com.github.steingrd.fermonitor.brews.CreateBrew;
 import com.github.steingrd.fermonitor.brews.ListBrews;
 import com.github.steingrd.fermonitor.brews.UploadTemperature;
 import com.github.steingrd.fermonitor.security.ProtectedHandler;
@@ -34,12 +33,21 @@ public class StartFermonitorApp {
 		final Vertx vertx = VertxFactory.newVertx();
 		final HttpServer server = vertx.createHttpServer();
 		final RouteMatcher router = new RouteMatcher();
+		final FeatureToggle featureToggle = new FeatureToggle();
 		
 		router
-			.get("/", request -> { request.response().end("Hello, world!"); })
-			.get("/brews", new ListBrews(tempodb))
-			.post("/brews/:brewId", new ProtectedHandler(ironCache, new CreateBrew(tempodb)))
-			.post("/brews/:brewId/temperatures", new ProtectedHandler(ironCache, new UploadTemperature(tempodb, jedisPool)));
+			.get("/", request -> {
+					String base = staticResources(featureToggle);
+					request.response().sendFile(base + "/index.html"); 
+				})
+			.get("/brews", 
+					new ListBrews(jedisPool))
+			.post("/brews/:brewId/temperatures", 
+					new ProtectedHandler(ironCache, new UploadTemperature(tempodb, jedisPool)))
+			.noMatch(request -> {
+					String base = staticResources(featureToggle);
+					request.response().sendFile(base + request.path(), base + "/404.html");
+				});
 		
 		server.requestHandler(router).listen(port(), asyncResult -> {
 			if (asyncResult.succeeded()) {
@@ -51,6 +59,14 @@ public class StartFermonitorApp {
 
 		// block the main thread
 		new CountDownLatch(1).await();
+	}
+
+	private static String staticResources(final FeatureToggle featureToggle) {
+		String base = "src/main/resources/webapp";
+		if (featureToggle.useClasspathForStaticResources()) {
+			base = "target/classes/webapp";
+		}
+		return base;
 	}
 
 	private static int port() {

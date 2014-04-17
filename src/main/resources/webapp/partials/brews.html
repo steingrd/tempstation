@@ -1,0 +1,12 @@
+<div class="container">
+	<table class="table">
+		<tr>
+			<th>Name</th>
+			<th>Last updated</th>
+		</tr>
+		<tr ng-repeat="b in brews">
+			<td><a href="/#/brews/{{ b.key }}">{{ b.key }}</a></td>
+			<td>{{ b.lastUpdated }}</td>
+		</tr>
+	</table>
+</div>

@@ -9,6 +9,7 @@ public class FeatureToggle {
 	private Boolean enableIronCache = null; 
 	private Boolean enableRedisCloud = null;
 	private Boolean verifyUploadsEnabled = null;
+	private Boolean useClasspathForStaticResources = null;
 	
 	public boolean shouldUpdateLastUpdatedTimestamp() {
 		if (updateLastUpdatedTimestamp == null) {
@@ -48,6 +49,14 @@ public class FeatureToggle {
 		}
 		
 		return verifyUploadsEnabled;
+	}
+
+	public boolean useClasspathForStaticResources() {
+		if (useClasspathForStaticResources == null) {
+			useClasspathForStaticResources = Boolean.valueOf(propertyOrEnvVariableWithDefault("FEATURE_RESOURCES_FROM_CLASSPATH", "true"));
+		}
+		
+		return useClasspathForStaticResources;
 	}
 
 }

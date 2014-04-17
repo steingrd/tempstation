@@ -1,28 +1,58 @@
 package com.github.steingrd.fermonitor.brews;
 
-import org.vertx.java.core.buffer.Buffer;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.vertx.java.core.http.HttpServerRequest;
 
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.steingrd.fermonitor.app.ThrowItAwayHandler;
-import com.tempodb.client.Client;
+
+import static com.github.steingrd.fermonitor.app.EnvironmentUtils.propertyOrEnvVariable;
 
 public class ListBrews implements ThrowItAwayHandler<HttpServerRequest> {
 
-	final Client tempodb;
+	final JedisPool jedisPool;
+	final String brewsSetKey;
 
-	public ListBrews(Client tempodb) {
-		this.tempodb = tempodb;
+	public ListBrews(JedisPool jedisPool) {
+		this.jedisPool = jedisPool;
+		this.brewsSetKey = propertyOrEnvVariable("FERMONITOR_BREWS_LIST");
+		
 	}
 
 	@Override
 	public void handleAndThrow(HttpServerRequest request) throws Exception {
-		Buffer responseBuffer = new Buffer();
 		
-		tempodb.getSeries().forEach(s -> {
-			responseBuffer.appendString(s.getKey() + "\n");
-		});
+		final List<BrewInfo> result = new LinkedList<>();
+
+		try (Jedis jedis = jedisPool.getResource()) {
+			for (String brew : jedis.smembers(brewsSetKey)) {
+				final String lastUpdated = jedis.get(brew + ".lastUpdated");
+				result.add(new BrewInfo(brew, lastUpdated));
+			}
+		}
 		
-		request.response().end(responseBuffer);
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json = objectMapper.writeValueAsString(result);
+		request.response().putHeader("Content-Type", "application/json").end(json);
+		
+	}
+	
+	private static class BrewInfo {
+		
+		@JsonProperty String key;
+		@JsonProperty String lastUpdated;
+
+		public BrewInfo(String key, String lastUpdated) {
+			this.key = key;
+			this.lastUpdated = lastUpdated;
+		}
 	}
 
 }

@@ -1,0 +1,8 @@
+h1, h2, th {
+	font-family: 'Yanone Kaffeesatz', sans-serif;
+	font-weight: 900;
+}
+
+th {
+	font-size: 30px;
+}
