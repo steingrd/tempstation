@@ -10,6 +10,7 @@
 	- environment variables for configuration
 		- heroku plugins:install git://github.com/ddollar/heroku-config.git
 
+# heroku releases
 
 # heroku logs -t
 
@@ -18,6 +19,10 @@
 # heroku addons:open tempodb
 
 	- https://tempo-db.com/manage/
+	- constant query time
+	- builtin plot, but not very pretty
+	- geographic redundancy
+	- backups
 
 # heroku addons:add iron_cache
 
