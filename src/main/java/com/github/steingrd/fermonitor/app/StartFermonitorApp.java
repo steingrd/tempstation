@@ -1,5 +1,7 @@
 package com.github.steingrd.fermonitor.app;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.concurrent.CountDownLatch;
 
 import org.slf4j.Logger;
@@ -8,6 +10,9 @@ import org.vertx.java.core.Vertx;
 import org.vertx.java.core.VertxFactory;
 import org.vertx.java.core.http.HttpServer;
 import org.vertx.java.core.http.RouteMatcher;
+
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 import com.github.mrcritical.ironcache.DefaultIronCache;
 import com.github.mrcritical.ironcache.IronCache;
@@ -25,7 +30,7 @@ public class StartFermonitorApp {
 
 	static final Logger log = LoggerFactory.getLogger(StartFermonitorApp.class);
 	
-	public static void main(String...args) throws InterruptedException {
+	public static void main(String...args) throws Exception {
 		log.info("Starting FermonitorApp...");
 		
 		final Client tempodb = new ClientBuilder()
@@ -41,6 +46,11 @@ public class StartFermonitorApp {
 			ironCacheProjectId(),
 			ironCacheCacheName());
 		
+		final JedisPool jedisPool = new JedisPool(
+			new JedisPoolConfig(), 
+			jedisHost(), 
+			jedisPort());
+		
 		final Vertx vertx = VertxFactory.newVertx();
 		final HttpServer server = vertx.createHttpServer();
 		final RouteMatcher router = new RouteMatcher();
@@ -49,7 +59,7 @@ public class StartFermonitorApp {
 			.get("/", request -> { request.response().end("Hello, world!"); })
 			.get("/brews", new ListBrews(tempodb))
 			.post("/brews/:brewId", new ProtectedHandler(ironCache, new CreateBrew(tempodb)))
-			.post("/brews/:brewId/temperatures", new ProtectedHandler(ironCache, new UploadTemperature(tempodb, ironCache)));
+			.post("/brews/:brewId/temperatures", new ProtectedHandler(ironCache, new UploadTemperature(tempodb, jedisPool)));
 		
 		server.requestHandler(router).listen(port(), asyncResult -> {
 			if (asyncResult.succeeded()) {
@@ -63,6 +73,16 @@ public class StartFermonitorApp {
 		new CountDownLatch(1).await();
 	}
 	
+	private static int jedisPort() throws URISyntaxException {
+		URI uri = new URI(propertyOrEnvVariable("REDISCLOUD_URL"));
+		return uri.getPort();
+	}
+
+	private static String jedisHost() throws URISyntaxException {
+		URI uri = new URI(propertyOrEnvVariable("REDISCLOUD_URL"));
+		return uri.getHost();
+	}
+
 	private static String ironCacheProjectId() {
 		return propertyOrEnvVariable("IRON_CACHE_PROJECT_ID");
 	}
