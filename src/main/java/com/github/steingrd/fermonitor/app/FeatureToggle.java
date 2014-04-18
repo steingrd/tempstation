@@ -6,7 +6,6 @@ public class FeatureToggle {
 
 	private Boolean updateLastUpdatedTimestamp = null;
 	private Boolean enableTempoDb = null;
-	private Boolean enableIronCache = null; 
 	private Boolean enableRedisCloud = null;
 	private Boolean verifyUploadsEnabled = null;
 	private Boolean useClasspathForStaticResources = null;
@@ -34,14 +33,6 @@ public class FeatureToggle {
 		}
 		
 		return enableTempoDb;
-	}
-	
-	public boolean ironCacheEnabled() {
-		if (enableIronCache == null) {
-			enableIronCache = Boolean.valueOf(get("FEATURE_IRON_CACHE", "true"));
-		}
-		
-		return enableIronCache;
 	}
 	
 	public boolean redisCloudEnabled() {
