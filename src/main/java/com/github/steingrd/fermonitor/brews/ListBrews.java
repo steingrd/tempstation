@@ -35,6 +35,7 @@ public class ListBrews implements ThrowItAwayHandler<HttpServerRequest> {
 				final String lastUpdated = jedis.get(brew + ".lastUpdated");
 				result.add(new BrewInfo(brew, lastUpdated));
 			}
+			jedisPool.returnResource(jedis);
 		}
 		
 

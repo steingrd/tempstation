@@ -55,6 +55,7 @@ public class CreateBrew {
 				log.info("Secret for brew {} is {} ", brewId, secret);
 			}
 			
+			jedisPool.returnResource(jedis);
 		}
 		
 	}

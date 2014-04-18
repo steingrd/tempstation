@@ -30,10 +30,10 @@ public class AuthorizationService {
 	public boolean isAuthorized(String brewId, String secret) {
 		try (Jedis jedis = jedisPool.getResource()) {
 			String cachedSecret = jedis.get(brewId + ".secret");
+			jedisPool.returnResource(jedis);
 			
 			log.debug("Authorizing key [{}] with secret [{}] against stored secret [{}]",
 					brewId, secret, cachedSecret);
-			
 			return secret.equals(cachedSecret);
 		}
 	}

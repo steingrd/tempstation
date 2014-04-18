@@ -32,10 +32,8 @@ public class CreateSecret {
 		final JedisPool jedisPool = new JedisPoolFactory().create();
 		final AuthorizationService authService = new AuthorizationService(jedisPool);
 		
-		try (Jedis jedis = jedisPool.getResource()) {
-			String secret = authService.createSecret(brewId);
-			log.info("Secret for brew {} is {} ", brewId, secret);
-		}
+		String secret = authService.createSecret(brewId);
+		log.info("Secret for brew {} is {} ", brewId, secret);
 		
 	}
 
