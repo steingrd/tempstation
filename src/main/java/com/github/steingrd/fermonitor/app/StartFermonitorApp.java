@@ -42,7 +42,7 @@ public class StartFermonitorApp {
 			.get ("/brews", new ListBrews(jedisPool))
 			.get ("/brews/:brewId/temperatures", new Temperatures(tempodb, jedisPool))
 			.post("/brews/:brewId/temperatures", 
-					new ProtectedHandler(jedisPool, new UploadTemperature(tempodb, jedisPool)))
+					new ProtectedHandler(jedisPool, new UploadTemperature(vertx, tempodb, jedisPool)))
 			.noMatch(request -> {
 					String base = staticResources(featureToggle);
 					request.response().sendFile(base + request.path(), base + "/404.html");
