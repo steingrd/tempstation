@@ -28,15 +28,15 @@ public class VerifyUploads {
 
 	public static void verifyUploads() throws Exception {
 		
-		String cacheKey = fermonitorTimestampItem();
 		JedisPool jedisPool = new JedisPoolFactory().create();
 		
+		String seriesId = get("APP_VERIFY_SERIES");
 		Jedis jedis = null;
 		String cachedTimestamp = null;
 		
 		try {
 			jedis = jedisPool.getResource();
-			cachedTimestamp = jedis.get(cacheKey);
+			cachedTimestamp = jedis.get(seriesId + ".lastUpdated");
 			
 		} finally {
 			if (jedis != null) {
@@ -45,7 +45,7 @@ public class VerifyUploads {
 		}
 		
 		if (cachedTimestamp == null) {
-			log.warn("{} not found in redis instance, could not verify last update time", cacheKey);
+			log.warn("{} not found in redis, could not verify last update time", seriesId + ".lastUpdated");
 		} else {
 			DateTime lastUpdated = DateTime.parse(cachedTimestamp);
 			if (lastUpdated.plusMinutes(5).isBeforeNow()) {
@@ -54,10 +54,5 @@ public class VerifyUploads {
 		}
 	}
 
-	private static String fermonitorTimestampItem() {
-		return get("FERMONITOR_TIMESTAMP_ITEM");
-	}
-	
-	
 	
 }
