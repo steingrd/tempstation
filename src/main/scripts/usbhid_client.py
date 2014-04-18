@@ -57,7 +57,7 @@ def read_and_post():
 
 if __name__ == '__main__':
 	if len(sys.argv) != 4:
-		print 'usage: fermonitorclient.py <brewid> <key> <secret>'
+		print 'usage: usbhid_client.py <brewid> <key> <secret>'
 		sys.exit(1)
 
 	read_and_post()

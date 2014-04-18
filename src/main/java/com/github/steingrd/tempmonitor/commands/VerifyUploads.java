@@ -1,4 +1,4 @@
-package com.github.steingrd.fermonitor.commands;
+package com.github.steingrd.tempmonitor.commands;
 
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -7,10 +7,10 @@ import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
-import com.github.steingrd.fermonitor.app.FeatureToggle;
-import com.github.steingrd.fermonitor.app.JedisPoolFactory;
+import com.github.steingrd.tempmonitor.app.FeatureToggle;
+import com.github.steingrd.tempmonitor.app.JedisPoolFactory;
 
-import static com.github.steingrd.fermonitor.app.Configuration.get;
+import static com.github.steingrd.tempmonitor.app.Configuration.get;
 
 public class VerifyUploads {
 

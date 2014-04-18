@@ -1,4 +1,4 @@
-package com.github.steingrd.fermonitor.app;
+package com.github.steingrd.tempmonitor.app;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.github.steingrd.fermonitor.app;
+package com.github.steingrd.tempmonitor.app;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -11,20 +11,20 @@ import org.vertx.java.core.http.RouteMatcher;
 
 import redis.clients.jedis.JedisPool;
 
-import com.github.steingrd.fermonitor.brews.ListBrews;
-import com.github.steingrd.fermonitor.brews.Temperatures;
-import com.github.steingrd.fermonitor.brews.UploadTemperature;
-import com.github.steingrd.fermonitor.security.ProtectedHandler;
+import com.github.steingrd.tempmonitor.brews.ListBrews;
+import com.github.steingrd.tempmonitor.brews.Temperatures;
+import com.github.steingrd.tempmonitor.brews.UploadTemperature;
+import com.github.steingrd.tempmonitor.security.ProtectedHandler;
 import com.tempodb.client.Client;
 
-import static com.github.steingrd.fermonitor.app.Configuration.get;
+import static com.github.steingrd.tempmonitor.app.Configuration.get;
 
-public class StartFermonitorApp {
+public class StartApp {
 
 	static final Logger log = LoggerFactory.getLogger(StartFermonitorApp.class);
 	
 	public static void main(String...args) throws Exception {
-		log.info("Starting FermonitorApp...");
+		log.info("Starting...");
 		
 		final Client tempodb = new TempoDbFactory().create();
 		final JedisPool jedisPool = new JedisPoolFactory().create();

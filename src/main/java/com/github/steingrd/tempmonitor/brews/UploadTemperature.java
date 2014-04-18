@@ -1,4 +1,4 @@
-package com.github.steingrd.fermonitor.brews;
+package com.github.steingrd.tempmonitor.brews;
 
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -8,8 +8,8 @@ import org.vertx.java.core.http.HttpServerRequest;
 
 import redis.clients.jedis.JedisPool;
 
-import com.github.steingrd.fermonitor.app.FeatureToggle;
-import com.github.steingrd.fermonitor.app.ThrowItAwayHandler;
+import com.github.steingrd.tempmonitor.app.FeatureToggle;
+import com.github.steingrd.tempmonitor.app.ThrowItAwayHandler;
 import com.tempodb.client.Client;
 import com.tempodb.models.DataPoint;
 

@@ -1,11 +1,11 @@
-package com.github.steingrd.fermonitor.security;
+package com.github.steingrd.tempmonitor.security;
 
 import org.vertx.java.core.Handler;
 import org.vertx.java.core.http.HttpServerRequest;
 
 import redis.clients.jedis.JedisPool;
 
-import com.github.steingrd.fermonitor.app.FeatureToggle;
+import com.github.steingrd.tempmonitor.app.FeatureToggle;
 
 public class ProtectedHandler implements Handler<HttpServerRequest> {
 

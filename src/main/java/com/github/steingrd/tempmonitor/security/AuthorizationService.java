@@ -1,4 +1,4 @@
-package com.github.steingrd.fermonitor.security;
+package com.github.steingrd.tempmonitor.security;
 
 import java.io.IOException;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package com.github.steingrd.fermonitor.commands;
+package com.github.steingrd.tempmonitor.commands;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,12 +6,12 @@ import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
-import com.github.steingrd.fermonitor.app.JedisPoolFactory;
-import com.github.steingrd.fermonitor.app.TempoDbFactory;
+import com.github.steingrd.tempmonitor.app.JedisPoolFactory;
+import com.github.steingrd.tempmonitor.app.TempoDbFactory;
 import com.tempodb.client.Client;
 import com.tempodb.models.Filter;
 
-import static com.github.steingrd.fermonitor.app.Configuration.get;
+import static com.github.steingrd.tempmonitor.app.Configuration.get;
 
 public class DeleteSeries {
 

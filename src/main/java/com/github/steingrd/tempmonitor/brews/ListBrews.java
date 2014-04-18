@@ -1,4 +1,4 @@
-package com.github.steingrd.fermonitor.brews;
+package com.github.steingrd.tempmonitor.brews;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,9 +10,9 @@ import redis.clients.jedis.JedisPool;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.steingrd.fermonitor.app.ThrowItAwayHandler;
+import com.github.steingrd.tempmonitor.app.ThrowItAwayHandler;
 
-import static com.github.steingrd.fermonitor.app.Configuration.get;
+import static com.github.steingrd.tempmonitor.app.Configuration.get;
 
 public class ListBrews implements ThrowItAwayHandler<HttpServerRequest> {
 
@@ -21,7 +21,7 @@ public class ListBrews implements ThrowItAwayHandler<HttpServerRequest> {
 
 	public ListBrews(JedisPool jedisPool) {
 		this.jedisPool = jedisPool;
-		this.brewsSetKey = get("FERMONITOR_BREWS_LIST");
+		this.brewsSetKey = get("APP_BREWS_LIST");
 		
 	}
 

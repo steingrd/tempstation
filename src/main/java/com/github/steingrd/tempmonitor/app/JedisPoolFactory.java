@@ -1,11 +1,11 @@
-package com.github.steingrd.fermonitor.app;
+package com.github.steingrd.tempmonitor.app;
 
 import java.net.URI;
 
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Protocol;
-import static com.github.steingrd.fermonitor.app.Configuration.get;
+import static com.github.steingrd.tempmonitor.app.Configuration.get;
 
 public class JedisPoolFactory {
 

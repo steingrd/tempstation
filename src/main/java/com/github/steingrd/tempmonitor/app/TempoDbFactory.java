@@ -1,9 +1,9 @@
-package com.github.steingrd.fermonitor.app;
+package com.github.steingrd.tempmonitor.app;
 
 import com.tempodb.client.Client;
 import com.tempodb.client.ClientBuilder;
 
-import static com.github.steingrd.fermonitor.app.Configuration.get;
+import static com.github.steingrd.tempmonitor.app.Configuration.get;
 
 public class TempoDbFactory {
 
