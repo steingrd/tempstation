@@ -21,7 +21,7 @@ import static com.github.steingrd.tempmonitor.app.Configuration.get;
 
 public class StartApp {
 
-	static final Logger log = LoggerFactory.getLogger(StartFermonitorApp.class);
+	static final Logger log = LoggerFactory.getLogger(StartApp.class);
 	
 	public static void main(String...args) throws Exception {
 		log.info("Starting...");
