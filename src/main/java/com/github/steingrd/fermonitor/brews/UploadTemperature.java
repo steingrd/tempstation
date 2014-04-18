@@ -38,9 +38,9 @@ public class UploadTemperature implements ThrowItAwayHandler<HttpServerRequest> 
 		double temperature = Double.parseDouble(request.params().get("temperature"));
 		
 		vertx.runOnContext(event -> {
-			log.debug("Writing timestamp {} and temperature to tempodb {}.", timestamp, temperature);
 			try {
 				tempodb.writeKey(brewId, newArrayList(new DataPoint(timestamp, temperature)));
+				log.info("Saved timestamp {} and temperature to tempodb {}.", timestamp, temperature);
 			} catch (Exception e) {
 				log.error("Failed to update tempodb", e);
 				request.response().setStatusCode(500).end(e.getMessage());
@@ -52,7 +52,7 @@ public class UploadTemperature implements ThrowItAwayHandler<HttpServerRequest> 
 		vertx.runOnContext(event -> {
 			if (featureToggle.shouldUpdateLastUpdatedTimestamp()) {
 				lastUpdated.updatedSuccessfully(brewId);
-				log.debug("Successfully updated redis");
+				log.info("Successfully updated redis with latest timestamp for {}", brewId);
 			}
 		});
 
