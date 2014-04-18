@@ -44,6 +44,7 @@ public class StartFermonitorApp {
 			.post("/brews/:brewId/temperatures", 
 					new ProtectedHandler(jedisPool, new UploadTemperature(vertx, tempodb, jedisPool)))
 			.noMatch(request -> {
+					log.info("No handlers matching: " + request.path());
 					String base = staticResources(featureToggle);
 					request.response().sendFile(base + request.path(), base + "/404.html");
 				});

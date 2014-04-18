@@ -10,7 +10,16 @@ public class FeatureToggle {
 	private Boolean enableRedisCloud = null;
 	private Boolean verifyUploadsEnabled = null;
 	private Boolean useClasspathForStaticResources = null;
+	private Boolean protectedHandlerEnabled = null;
 	
+	public boolean protectedHandlerEnabled() {
+		if (protectedHandlerEnabled == null) {
+			protectedHandlerEnabled = Boolean.valueOf(get("FEATURE_PROTECTED_HANDLER", "true"));
+		}
+
+		return protectedHandlerEnabled;
+	}
+
 	public boolean shouldUpdateLastUpdatedTimestamp() {
 		if (updateLastUpdatedTimestamp == null) {
 			updateLastUpdatedTimestamp = Boolean.valueOf(get("FEATURE_LAST_UPDATED", "false"));
