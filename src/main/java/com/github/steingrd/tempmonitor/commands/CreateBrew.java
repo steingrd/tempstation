@@ -13,6 +13,7 @@ import com.github.steingrd.tempmonitor.app.TempoDbFactory;
 import com.github.steingrd.tempmonitor.security.AuthorizationService;
 import com.tempodb.client.Client;
 
+import static com.github.steingrd.tempmonitor.app.Configuration.APP_BREWS_LIST;
 import static com.github.steingrd.tempmonitor.app.Configuration.get;
 
 public class CreateBrew {
@@ -33,7 +34,7 @@ public class CreateBrew {
 			return;
 		}
 		
-		final String brewsSet = get("APP_BREWS_LIST");
+		final String brewsSet = get(APP_BREWS_LIST);
 		final String brewId = args[0];
 		
 		final JedisPool jedisPool = new JedisPoolFactory().create();

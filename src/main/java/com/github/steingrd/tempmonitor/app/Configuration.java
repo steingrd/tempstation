@@ -3,9 +3,27 @@ package com.github.steingrd.tempmonitor.app;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Configuration {
+public enum Configuration {
+	APP_VERIFY_SERIES,
+	APP_BREWS_LIST,
+	FEATURE_LAST_UPDATED,
+	FEATURE_PROTECTED_HANDLER,
+	FEATURE_REDIS_CLOUD,
+	FEATURE_RESOURCES_FROM_CLASSPATH,
+	FEATURE_TEMPO_DB,
+	FEATURE_VERIFY_UPLOADS,
+	// heroku configurations below
+	REDISCLOUD_URL;
 
 	static final Logger log = LoggerFactory.getLogger(Configuration.class);
+	
+	public static String get(Configuration setting) {
+		return get(setting.name());
+	}
+	
+	public static String get(Configuration setting, String defaultValue) {
+		return get(setting.name(), defaultValue);
+	}
 	
 	public static String get(String name) {
 		String value = get(name, null);

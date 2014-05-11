@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.steingrd.tempmonitor.app.ThrowItAwayHandler;
 
+import static com.github.steingrd.tempmonitor.app.Configuration.APP_BREWS_LIST;
 import static com.github.steingrd.tempmonitor.app.Configuration.get;
 
 public class ListBrews implements ThrowItAwayHandler<HttpServerRequest> {
@@ -21,7 +22,7 @@ public class ListBrews implements ThrowItAwayHandler<HttpServerRequest> {
 
 	public ListBrews(JedisPool jedisPool) {
 		this.jedisPool = jedisPool;
-		this.brewsSetKey = get("APP_BREWS_LIST");
+		this.brewsSetKey = get(APP_BREWS_LIST);
 		
 	}
 

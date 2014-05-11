@@ -10,6 +10,7 @@ import redis.clients.jedis.JedisPool;
 import com.github.steingrd.tempmonitor.app.FeatureToggle;
 import com.github.steingrd.tempmonitor.app.JedisPoolFactory;
 
+import static com.github.steingrd.tempmonitor.app.Configuration.APP_VERIFY_SERIES;
 import static com.github.steingrd.tempmonitor.app.Configuration.get;
 
 public class VerifyUploads {
@@ -30,7 +31,7 @@ public class VerifyUploads {
 		
 		JedisPool jedisPool = new JedisPoolFactory().create();
 		
-		String seriesId = get("APP_VERIFY_SERIES");
+		String seriesId = get(APP_VERIFY_SERIES);
 		Jedis jedis = null;
 		String cachedTimestamp = null;
 		

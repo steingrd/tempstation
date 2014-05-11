@@ -11,6 +11,7 @@ import com.github.steingrd.tempmonitor.app.TempoDbFactory;
 import com.tempodb.client.Client;
 import com.tempodb.models.Filter;
 
+import static com.github.steingrd.tempmonitor.app.Configuration.APP_BREWS_LIST;
 import static com.github.steingrd.tempmonitor.app.Configuration.get;
 
 public class DeleteSeries {
@@ -31,7 +32,7 @@ public class DeleteSeries {
 			return;
 		}
 		
-		final String brewsSet = get("FERMONITOR_BREWS_LIST");
+		final String brewsSet = get(APP_BREWS_LIST);
 		final String brewId = args[0];
 		
 		final JedisPool jedisPool = new JedisPoolFactory().create();

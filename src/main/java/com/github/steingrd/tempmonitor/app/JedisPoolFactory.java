@@ -5,6 +5,7 @@ import java.net.URI;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Protocol;
+import static com.github.steingrd.tempmonitor.app.Configuration.REDISCLOUD_URL;
 import static com.github.steingrd.tempmonitor.app.Configuration.get;
 
 public class JedisPoolFactory {
@@ -12,7 +13,7 @@ public class JedisPoolFactory {
 	public JedisPool create() {
 		if (new FeatureToggle().redisCloudEnabled()) {
 			try {
-				URI uri = new URI(get("REDISCLOUD_URL"));
+				URI uri = new URI(get(REDISCLOUD_URL));
 				
 				return new JedisPool(
 					new JedisPoolConfig(), 
