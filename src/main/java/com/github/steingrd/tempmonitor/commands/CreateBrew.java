@@ -33,7 +33,7 @@ public class CreateBrew {
 			return;
 		}
 		
-		final String brewsSet = get("FERMONITOR_BREWS_LIST");
+		final String brewsSet = get("APP_BREWS_LIST");
 		final String brewId = args[0];
 		
 		final JedisPool jedisPool = new JedisPoolFactory().create();
