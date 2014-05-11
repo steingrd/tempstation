@@ -6,9 +6,11 @@ import time
 import threading
 import temperusb
 import requests
+import pytz
+import urllib
 
 interval = 60 # seconds
-base_url = 'http://fermonitor.herokuapp.com'
+base_url = 'http://temperaturemonitor.herokuapp.com'
 
 def get_brew_id():
 	return sys.argv[1]
@@ -28,8 +30,8 @@ def read_temperature():
 		return None
 
 def make_url(brew_id, timestamp, temperature):
-	return '%s/brews/%s/temperatures?timestamp=%s&temperature=%s' % \
-		(base_url, brew_id, timestamp, temperature)
+	params = urllib.urlencode({'timestamp': timestamp, 'temperature': temperature})
+	return '%s/brews/%s/temperatures?%s' % (base_url, brew_id, params)
 
 def make_headers():
 	return {
@@ -47,7 +49,7 @@ def schedule_task(task):
 	t.start()
 
 def make_timestamp():
-	return datetime.datetime.now().isoformat()
+	return datetime.datetime.utcnow().replace(tzinfo = pytz.utc).strftime("%Y-%m-%dT%H:%M:%S%z")
 
 def read_and_post():
 	temperature = read_temperature()
