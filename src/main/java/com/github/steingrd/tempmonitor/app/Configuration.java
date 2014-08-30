@@ -12,6 +12,7 @@ public enum Configuration {
 	FEATURE_RESOURCES_FROM_CLASSPATH,
 	FEATURE_TEMPO_DB,
 	FEATURE_VERIFY_UPLOADS,
+	FEATURE_GRAPHITE,
 	// heroku configurations below
 	REDISCLOUD_URL;
 
@@ -23,6 +24,10 @@ public enum Configuration {
 	
 	public static String get(Configuration setting, String defaultValue) {
 		return get(setting.name(), defaultValue);
+	}
+	
+	public static boolean get(Configuration setting, boolean defaultValue) {
+		return Boolean.parseBoolean(get(setting.name(), Boolean.toString(defaultValue)));
 	}
 	
 	public static String get(String name) {

@@ -1,5 +1,6 @@
 package com.github.steingrd.tempmonitor.app;
 
+import static com.github.steingrd.tempmonitor.app.Configuration.FEATURE_GRAPHITE;
 import static com.github.steingrd.tempmonitor.app.Configuration.FEATURE_LAST_UPDATED;
 import static com.github.steingrd.tempmonitor.app.Configuration.FEATURE_PROTECTED_HANDLER;
 import static com.github.steingrd.tempmonitor.app.Configuration.FEATURE_REDIS_CLOUD;
@@ -16,10 +17,11 @@ public class FeatureToggle {
 	private Boolean verifyUploadsEnabled = null;
 	private Boolean useClasspathForStaticResources = null;
 	private Boolean protectedHandlerEnabled = null;
+	private Boolean graphiteEnabled = null;
 	
 	public boolean protectedHandlerEnabled() {
 		if (protectedHandlerEnabled == null) {
-			protectedHandlerEnabled = Boolean.valueOf(get(FEATURE_PROTECTED_HANDLER, "true"));
+			protectedHandlerEnabled = get(FEATURE_PROTECTED_HANDLER, true);
 		}
 
 		return protectedHandlerEnabled;
@@ -27,7 +29,7 @@ public class FeatureToggle {
 
 	public boolean shouldUpdateLastUpdatedTimestamp() {
 		if (updateLastUpdatedTimestamp == null) {
-			updateLastUpdatedTimestamp = Boolean.valueOf(get(FEATURE_LAST_UPDATED, "false"));
+			updateLastUpdatedTimestamp = get(FEATURE_LAST_UPDATED, false);
 		}
 		
 		return updateLastUpdatedTimestamp;
@@ -35,7 +37,7 @@ public class FeatureToggle {
 
 	public boolean tempoDbEnabled() {
 		if (enableTempoDb == null) {
-			enableTempoDb = Boolean.valueOf(get(FEATURE_TEMPO_DB, "true"));
+			enableTempoDb = get(FEATURE_TEMPO_DB, true);
 		}
 		
 		return enableTempoDb;
@@ -43,7 +45,7 @@ public class FeatureToggle {
 	
 	public boolean redisCloudEnabled() {
 		if (enableRedisCloud == null) {
-			enableRedisCloud = Boolean.valueOf(get(FEATURE_REDIS_CLOUD, "true"));
+			enableRedisCloud = get(FEATURE_REDIS_CLOUD, true);
 		}
 		
 		return enableRedisCloud;
@@ -51,7 +53,7 @@ public class FeatureToggle {
 
 	public boolean verifyUploadsEnabled() {
 		if (verifyUploadsEnabled == null) {
-			verifyUploadsEnabled = Boolean.valueOf(get(FEATURE_VERIFY_UPLOADS, "true"));
+			verifyUploadsEnabled = get(FEATURE_VERIFY_UPLOADS, true);
 		}
 		
 		return verifyUploadsEnabled;
@@ -59,10 +61,18 @@ public class FeatureToggle {
 
 	public boolean useClasspathForStaticResources() {
 		if (useClasspathForStaticResources == null) {
-			useClasspathForStaticResources = Boolean.valueOf(get(FEATURE_RESOURCES_FROM_CLASSPATH, "true"));
+			useClasspathForStaticResources = get(FEATURE_RESOURCES_FROM_CLASSPATH, true);
 		}
 		
 		return useClasspathForStaticResources;
 	}
 
+	public boolean graphiteEnabled() {
+		if (graphiteEnabled == null) {
+			graphiteEnabled = get(FEATURE_GRAPHITE, true);
+		}
+		
+		return graphiteEnabled;
+	}
+	
 }
