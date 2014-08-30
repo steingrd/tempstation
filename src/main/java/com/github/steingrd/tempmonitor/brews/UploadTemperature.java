@@ -22,6 +22,7 @@ public class UploadTemperature implements ThrowItAwayHandler<HttpServerRequest> 
 	final FeatureToggle featureToggle;
 	final Client tempodb;
 	final LastUpdatedService lastUpdated;
+	final GraphiteClient graphiteClient;
 	final Vertx vertx;
 	
 	public UploadTemperature(Vertx vertx, Client tempodb, JedisPool jedis) {
@@ -29,6 +30,7 @@ public class UploadTemperature implements ThrowItAwayHandler<HttpServerRequest> 
 		this.tempodb = tempodb;
 		this.lastUpdated = new LastUpdatedService(jedis);
 		this.featureToggle = new FeatureToggle();
+		this.graphiteClient = new GraphiteClient();
 	}
 
 	@Override
@@ -48,6 +50,20 @@ public class UploadTemperature implements ThrowItAwayHandler<HttpServerRequest> 
 					return;
 				}
 				log.debug("Successfully updated tempodb");
+			});
+		}
+		
+		if (featureToggle.graphiteEnabled()) {
+			vertx.runOnContext(event -> {
+				try {
+					graphiteClient.uploadTemperature(temperature);
+				} catch (Exception e) {
+					log.error("Failed to update graphite", e);
+					request.response().setStatusCode(500).end(e.getMessage());
+					return;
+				}
+				
+				log.debug("Successfully updated graphite");
 			});
 		}
 		
