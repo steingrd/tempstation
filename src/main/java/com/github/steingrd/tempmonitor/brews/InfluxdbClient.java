@@ -1,5 +1,7 @@
 package com.github.steingrd.tempmonitor.brews;
 
+import java.util.concurrent.TimeUnit;
+
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.Serie;
@@ -7,6 +9,7 @@ import org.influxdb.dto.Serie;
 import com.github.steingrd.tempmonitor.app.Configuration;
 
 import static java.util.concurrent.TimeUnit.MINUTES;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class InfluxdbClient {
 
@@ -27,7 +30,7 @@ public class InfluxdbClient {
 			.values(temperature)
 			.build();
 		
-		this.influxdb.write(database, MINUTES, s);
+		this.influxdb.write(database, SECONDS, s);
 	}
 
 }
