@@ -13,6 +13,7 @@ public enum Configuration {
 	FEATURE_TEMPO_DB,
 	FEATURE_VERIFY_UPLOADS,
 	FEATURE_GRAPHITE,
+	FEATURE_INFLUXDB,
 	// heroku configurations below
 	REDISCLOUD_URL;
 

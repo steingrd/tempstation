@@ -51,6 +51,12 @@
 	</build>
 
 	<dependencies>
+		<!-- influxdb client -->
+		<dependency>
+			<groupId>org.influxdb</groupId>
+			<artifactId>influxdb-java</artifactId>
+			<version>1.2</version>
+		</dependency>
 		<!-- redis client -->
 		<dependency>
 			<groupId>redis.clients</groupId>

@@ -1,6 +1,7 @@
 package com.github.steingrd.tempmonitor.app;
 
 import static com.github.steingrd.tempmonitor.app.Configuration.FEATURE_GRAPHITE;
+import static com.github.steingrd.tempmonitor.app.Configuration.FEATURE_INFLUXDB;
 import static com.github.steingrd.tempmonitor.app.Configuration.FEATURE_LAST_UPDATED;
 import static com.github.steingrd.tempmonitor.app.Configuration.FEATURE_PROTECTED_HANDLER;
 import static com.github.steingrd.tempmonitor.app.Configuration.FEATURE_REDIS_CLOUD;
@@ -18,6 +19,15 @@ public class FeatureToggle {
 	private Boolean useClasspathForStaticResources = null;
 	private Boolean protectedHandlerEnabled = null;
 	private Boolean graphiteEnabled = null;
+	private Boolean influxdbEnabled = null;
+	
+	public boolean influxdbEnabled() {
+		if (influxdbEnabled == null) {
+			influxdbEnabled = get(FEATURE_INFLUXDB, true);
+		}
+		
+		return influxdbEnabled;
+	}
 	
 	public boolean protectedHandlerEnabled() {
 		if (protectedHandlerEnabled == null) {

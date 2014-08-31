@@ -24,6 +24,7 @@ public class UploadTemperature implements ThrowItAwayHandler<HttpServerRequest> 
 	final LastUpdatedService lastUpdated;
 	final GraphiteClient graphiteClient;
 	final Vertx vertx;
+	final InfluxdbClient influxdbClient;
 	
 	public UploadTemperature(Vertx vertx, Client tempodb, JedisPool jedis) {
 		this.vertx = vertx;
@@ -31,6 +32,7 @@ public class UploadTemperature implements ThrowItAwayHandler<HttpServerRequest> 
 		this.lastUpdated = new LastUpdatedService(jedis);
 		this.featureToggle = new FeatureToggle();
 		this.graphiteClient = new GraphiteClient();
+		this.influxdbClient = new InfluxdbClient();
 	}
 
 	@Override
@@ -50,6 +52,13 @@ public class UploadTemperature implements ThrowItAwayHandler<HttpServerRequest> 
 					return;
 				}
 				log.debug("Successfully updated tempodb");
+			});
+		}
+		
+		if (featureToggle.influxdbEnabled()) {
+			vertx.runOnContext(event -> {
+				influxdbClient.uploadTemperature(temperature);
+				log.debug("Successfully updated influxdb");
 			});
 		}
 		
